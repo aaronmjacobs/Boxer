@@ -17,6 +17,12 @@ if (APPLE)
    )
 endif (APPLE)
 
+if (WIN32)
+   list(APPEND SOURCES
+      "${LIB_DIR}/boxer_win.cpp"
+   )
+endif (WIN32)
+
 include_directories(${INC_DIR})
 add_library(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
