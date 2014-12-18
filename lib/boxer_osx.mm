@@ -3,12 +3,12 @@
 
 namespace boxer {
 
-void show(const std::string &message, const std::string &title) {
+void show(const char *message, const char *title) {
    NSAlert *alert = [[NSAlert alloc] init];
    [alert addButtonWithTitle:@"OK"];
-   [alert setMessageText:[NSString stringWithCString:title.c_str()
+   [alert setMessageText:[NSString stringWithCString:title
                                    encoding:[NSString defaultCStringEncoding]]];
-   [alert setInformativeText:[NSString stringWithCString:message.c_str()
+   [alert setInformativeText:[NSString stringWithCString:message
                                        encoding:[NSString defaultCStringEncoding]]];
    [alert setAlertStyle:NSWarningAlertStyle];
 

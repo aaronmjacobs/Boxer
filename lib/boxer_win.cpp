@@ -3,8 +3,8 @@
 
 namespace boxer {
 
-void show(const std::string &message, const std::string &title) {
-   MessageBox(NULL, message.c_str(), title.c_str(), MB_OK);
+void show(const char *message, const char *title) {
+   MessageBox(NULL, message, title, MB_OK);
 }
 
 } // namespace boxer

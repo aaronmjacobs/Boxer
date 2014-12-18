@@ -1,11 +1,9 @@
 #ifndef BOXER_H
 #define BOXER_H
 
-#include <string>
-
 namespace boxer {
 
-void show(const std::string &message, const std::string &title);
+void show(const char *message, const char *title);
 
 } // namespace boxer
 
