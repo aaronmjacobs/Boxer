@@ -7,6 +7,11 @@ set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 set(SOURCES "")
 set(LIBRARIES "")
 
+if (NOT WIN32)
+   # C++11
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif (NOT WIN32)
+
 if (APPLE)
    list(APPEND SOURCES
       "${LIB_DIR}/boxer_osx.mm"
