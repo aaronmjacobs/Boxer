@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(Boxer)
 
+option(BUILD_EXAMPLES "Build example program" OFF)
+
 set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 
@@ -42,6 +44,12 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
    add_definitions(${GTK3_CFLAGS_OTHER})
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
+set(BOXER_LIBRARIES ${LIBRARIES} CACHE STRING "Dependencies of Boxer")
+
 include_directories(${INC_DIR})
 add_library(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+
+if (BUILD_EXAMPLES)
+   add_subdirectory(example)
+endif()
