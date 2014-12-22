@@ -18,6 +18,10 @@ Linux:
 
 ![Linux](http://i.imgur.com/BmzzdsW.png)
 
+## Language
+
+Boxer is written in C++, though it has a C branch available as well.
+
 ## Compiling Boxer
 
 Boxer is set up to be built with CMake.
@@ -28,7 +32,7 @@ To generate a static library, execute CMake with the root of the repo as the sou
 
 Wherever you want to use Boxer, just include the header:
 
-```c++
+```c
 #include <boxer/boxer.h>
 ```
 
@@ -60,16 +64,16 @@ target_link_libraries(myapp Boxer)
 
 ## Using Boxer
 
-To create a message box using Boxer, call the 'show' method in the 'boxer' namespace and provide a message and title:
+To create a message box using Boxer, call the 'boxerShow' method and provide a message, title, style, and buttons:
 
-```c++
-boxer::show("Simple message boxes are very easy to create.", "Simple Example");
+```c
+boxerShow("Simple message boxes are very easy to create.", "Simple Example", BOXER_DEFAULT_STYLE, BOXER_DEFAULT_BUTTONS);
 ```
 
-A style / set of buttons may also be specified, and the user's selection can be determined from the function's return value:
+Different styles / buttons may be specified, and the user's selection can be determined from the function's return value:
 
-```c++
-boxer::Selection sel = boxer::show("Make a choice:", "Decision", boxer::Style::Warning, boxer::Buttons::YesNo);
+```c
+BoxerSelection sel = boxerShow("Make a choice:", "Decision", BoxerStyleWarning, BoxerButtonsYesNo);
 ```
 
 Calls to 'show' are blocking - execution of your program will not continue until the user dismisses the message box.
