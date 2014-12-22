@@ -18,6 +18,10 @@ Linux:
 
 ![Linux](http://i.imgur.com/BmzzdsW.png)
 
+## Language
+
+Boxer is written in C++, though it has a C branch available as well.
+
 ## Compiling Boxer
 
 Boxer is set up to be built with CMake.
