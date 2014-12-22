@@ -1,40 +1,36 @@
 #include <boxer/boxer.h>
 #import <Cocoa/Cocoa.h>
 
-namespace boxer {
+static NSString* const OK_STR = @"OK";
+static NSString* const CANCEL_STR = @"Cancel";
+static NSString* const YES_STR = @"Yes";
+static NSString* const NO_STR = @"No";
 
-namespace {
-
-NSString* const OK_STR = @"OK";
-NSString* const CANCEL_STR = @"Cancel";
-NSString* const YES_STR = @"Yes";
-NSString* const NO_STR = @"No";
-
-NSAlertStyle getAlertStyle(Style style) {
+static NSAlertStyle getAlertStyle(BoxerStyle style) {
    switch (style) {
-      case Style::Info:
+      case BoxerStyleInfo:
          return NSInformationalAlertStyle;
-      case Style::Warning:
+      case BoxerStyleWarning:
          return NSWarningAlertStyle;
-      case Style::Error:
+      case BoxerStyleError:
          return NSCriticalAlertStyle;
-      case Style::Question:
+      case BoxerStyleQuestion:
          return NSWarningAlertStyle;
       default:
          return NSInformationalAlertStyle;
    }
 }
 
-void setButtons(NSAlert *alert, Buttons buttons) {
+static void setButtons(NSAlert *alert, BoxerButtons buttons) {
    switch (buttons) {
-      case Buttons::OK:
+      case BoxerButtonsOK:
          [alert addButtonWithTitle:OK_STR];
          break;
-      case Buttons::OKCancel:
+      case BoxerButtonsOKCancel:
          [alert addButtonWithTitle:OK_STR];
          [alert addButtonWithTitle:CANCEL_STR];
          break;
-      case Buttons::YesNo:
+      case BoxerButtonsYesNo:
          [alert addButtonWithTitle:YES_STR];
          [alert addButtonWithTitle:NO_STR];
          break;
@@ -43,34 +39,32 @@ void setButtons(NSAlert *alert, Buttons buttons) {
    }
 }
 
-Selection getSelection(int index, Buttons buttons) {
+static BoxerSelection getSelection(int index, BoxerButtons buttons) {
    switch (buttons) {
-      case Buttons::OK:
-         return index == NSAlertFirstButtonReturn ? Selection::OK : Selection::None;
-      case Buttons::OKCancel:
+      case BoxerButtonsOK:
+         return index == NSAlertFirstButtonReturn ? BoxerSelectionOK : BoxerSelectionNone;
+      case BoxerButtonsOKCancel:
          if (index == NSAlertFirstButtonReturn) {
-            return Selection::OK;
+            return BoxerSelectionOK;
          } else if (index == NSAlertSecondButtonReturn) {
-            return Selection::Cancel;
+            return BoxerSelectionCancel;
          } else {
-            return Selection::None;
+            return BoxerSelectionNone;
          }
-      case Buttons::YesNo:
+      case BoxerButtonsYesNo:
          if (index == NSAlertFirstButtonReturn) {
-            return Selection::Yes;
+            return BoxerSelectionYes;
          } else if (index == NSAlertSecondButtonReturn) {
-            return Selection::No;
+            return BoxerSelectionNo;
          } else {
-            return Selection::None;
+            return BoxerSelectionNone;
          }
       default:
-         return Selection::None;
+         return BoxerSelectionNone;
    }
 }
 
-} // namespace
-
-Selection show(const char *message, const char *title, Style style, Buttons buttons) {
+BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle style, BoxerButtons buttons) {
    NSAlert *alert = [[NSAlert alloc] init];
 
    [alert setMessageText:[NSString stringWithCString:title
@@ -81,10 +75,8 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
    [alert setAlertStyle:getAlertStyle(style)];
    setButtons(alert, buttons);
 
-   Selection selection = getSelection([alert runModal], buttons);
+   BoxerSelection selection = getSelection([alert runModal], buttons);
    [alert release];
 
    return selection;
 }
-
-} // namespace boxer

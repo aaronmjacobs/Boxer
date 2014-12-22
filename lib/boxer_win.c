@@ -1,56 +1,50 @@
 #include <boxer/boxer.h>
 #include <windows.h>
 
-namespace boxer {
-
-namespace {
-
-UINT getIcon(Style style) {
+static UINT getIcon(BoxerStyle style) {
    switch (style) {
-      case Style::Info:
+      case BoxerStyleInfo:
          return MB_ICONINFORMATION;
-      case Style::Warning:
+      case BoxerStyleWarning:
          return MB_ICONWARNING;
-      case Style::Error:
+      case BoxerStyleError:
          return MB_ICONERROR;
-      case Style::Question:
+      case BoxerStyleQuestion:
          return MB_ICONQUESTION;
       default:
          return MB_ICONINFORMATION;
    }
 }
 
-UINT getButtons(Buttons buttons) {
+static UINT getButtons(BoxerButtons buttons) {
    switch (buttons) {
-      case Buttons::OK:
+      case BoxerButtonsOK:
          return MB_OK;
-      case Buttons::OKCancel:
+      case BoxerButtonsOKCancel:
          return MB_OKCANCEL;
-      case Buttons::YesNo:
+      case BoxerButtonsYesNo:
          return MB_YESNO;
       default:
          return MB_OK;
    }
 }
 
-Selection getSelection(int response) {
+static BoxerSelection getSelection(int response) {
    switch (response) {
       case IDOK:
-         return Selection::OK;
+         return BoxerSelectionOK;
       case IDCANCEL:
-         return Selection::Cancel;
+         return BoxerSelectionCancel;
       case IDYES:
-         return Selection::Yes;
+         return BoxerSelectionYes;
       case IDNO:
-         return Selection::No;
+         return BoxerSelectionNo;
       default:
-         return Selection::None;
+         return BoxerSelectionNone;
    }
 }
 
-} // namespace
-
-Selection show(const char *message, const char *title, Style style, Buttons buttons) {
+BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle style, BoxerButtons buttons) {
    UINT flags = MB_TASKMODAL;
 
    flags |= getIcon(style);
@@ -58,5 +52,3 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
 
    return getSelection(MessageBox(NULL, message, title, flags));
 }
-
-} // namespace boxer

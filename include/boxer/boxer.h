@@ -1,46 +1,30 @@
 #ifndef BOXER_H
 #define BOXER_H
 
-namespace boxer {
+typedef enum {
+   BoxerStyleInfo,
+   BoxerStyleWarning,
+   BoxerStyleError,
+   BoxerStyleQuestion
+} BoxerStyle;
 
-enum class Style {
-   Info,
-   Warning,
-   Error,
-   Question
-};
+typedef enum {
+   BoxerButtonsOK,
+   BoxerButtonsOKCancel,
+   BoxerButtonsYesNo
+} BoxerButtons;
 
-enum class Buttons {
-   OK,
-   OKCancel,
-   YesNo
-};
+typedef enum {
+   BoxerSelectionOK,
+   BoxerSelectionCancel,
+   BoxerSelectionYes,
+   BoxerSelectionNo,
+   BoxerSelectionNone
+} BoxerSelection;
 
-enum class Selection {
-   OK,
-   Cancel,
-   Yes,
-   No,
-   None
-};
+static const BoxerStyle BOXER_DEFAULT_STYLE = BoxerStyleInfo;
+static const BoxerButtons BOXER_DEFAULT_BUTTONS = BoxerButtonsOK;
 
-const Style DEFAULT_STYLE = Style::Info;
-const Buttons DEFAULT_BUTTONS = Buttons::OK;
-
-Selection show(const char *message, const char *title, Style style, Buttons buttons);
-
-inline Selection show(const char *message, const char *title, Style style) {
-   return show(message, title, style, DEFAULT_BUTTONS);
-}
-
-inline Selection show(const char *message, const char *title, Buttons buttons) {
-   return show(message, title, DEFAULT_STYLE, buttons);
-}
-
-inline Selection show(const char *message, const char *title) {
-   return show(message, title, DEFAULT_STYLE, DEFAULT_BUTTONS);
-}
-
-} // namespace boxer
+BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle style, BoxerButtons buttons);
 
 #endif

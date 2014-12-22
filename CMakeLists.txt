@@ -9,14 +9,9 @@ set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 set(SOURCES "")
 set(LIBRARIES "")
 
-if (NOT WIN32)
-   # C++11
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif (NOT WIN32)
-
 if (APPLE)
    list(APPEND SOURCES
-      "${LIB_DIR}/boxer_osx.mm"
+      "${LIB_DIR}/boxer_osx.m"
    )
    find_library(COCOA_LIBRARY Cocoa)
    list(APPEND LIBRARIES
@@ -26,13 +21,13 @@ endif (APPLE)
 
 if (WIN32)
    list(APPEND SOURCES
-      "${LIB_DIR}/boxer_win.cpp"
+      "${LIB_DIR}/boxer_win.c"
    )
 endif (WIN32)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
    list(APPEND SOURCES
-      "${LIB_DIR}/boxer_linux.cpp"
+      "${LIB_DIR}/boxer_linux.c"
    )
    find_package(PkgConfig REQUIRED)
    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)

@@ -1,58 +1,52 @@
 #include <boxer/boxer.h>
 #include <gtk/gtk.h>
 
-namespace boxer {
-
-namespace {
-
-GtkMessageType getMessageType(Style style) {
+static GtkMessageType getMessageType(BoxerStyle style) {
    switch (style) {
-      case Style::Info:
+      case BoxerStyleInfo:
          return GTK_MESSAGE_INFO;
-      case Style::Warning:
+      case BoxerStyleWarning:
          return GTK_MESSAGE_WARNING;
-      case Style::Error:
+      case BoxerStyleError:
          return GTK_MESSAGE_ERROR;
-      case Style::Question:
+      case BoxerStyleQuestion:
          return GTK_MESSAGE_QUESTION;
       default:
          return GTK_MESSAGE_INFO;
    }
 }
 
-GtkButtonsType getButtonsType(Buttons buttons) {
+static GtkButtonsType getButtonsType(BoxerButtons buttons) {
    switch (buttons) {
-      case Buttons::OK:
+      case BoxerButtonsOK:
          return GTK_BUTTONS_OK;
-      case Buttons::OKCancel:
+      case BoxerButtonsOKCancel:
          return GTK_BUTTONS_OK_CANCEL;
-      case Buttons::YesNo:
+      case BoxerButtonsYesNo:
          return GTK_BUTTONS_YES_NO;
       default:
          return GTK_BUTTONS_OK;
    }
 }
 
-Selection getSelection(gint response) {
+static BoxerSelection getSelection(gint response) {
    switch (response) {
       case GTK_RESPONSE_OK:
-         return Selection::OK;
+         return BoxerSelectionOK;
       case GTK_RESPONSE_CANCEL:
-         return Selection::Cancel;
+         return BoxerSelectionCancel;
       case GTK_RESPONSE_YES:
-         return Selection::Yes;
+         return BoxerSelectionYes;
       case GTK_RESPONSE_NO:
-         return Selection::No;
+         return BoxerSelectionNo;
       default:
-         return Selection::None;
+         return BoxerSelectionNone;
    }
 }
 
-} // namespace
-
-Selection show(const char *message, const char *title, Style style, Buttons buttons) {
+BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle style, BoxerButtons buttons) {
    if (!gtk_init_check(0, NULL)) {
-      return Selection::None;
+      return BoxerSelectionNone;
    }
 
    GtkWidget *dialog = gtk_message_dialog_new(NULL,
@@ -62,12 +56,10 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
                                               "%s",
                                               message);
    gtk_window_set_title(GTK_WINDOW(dialog), title);
-   Selection selection = getSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
+   BoxerSelection selection = getSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
 
    gtk_widget_destroy(GTK_WIDGET(dialog));
-   while (g_main_context_iteration(NULL, false));
+   while (g_main_context_iteration(NULL, FALSE));
 
    return selection;
 }
-
-} // namespace boxer
