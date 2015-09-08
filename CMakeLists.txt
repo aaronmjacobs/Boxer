@@ -1,18 +1,21 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 project(Boxer)
 
-option(BUILD_EXAMPLES "Build example program" OFF)
+option(BOXER_BUILD_EXAMPLES "Build example program" OFF)
 
 set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 
-set(SOURCES "")
-set(LIBRARIES "")
+set(SOURCES)
+set(LIBRARIES)
+set(BOXER_DEFINITIONS)
 
-if (NOT WIN32)
-   # C++11
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif (NOT WIN32)
+if (BUILD_SHARED_LIBS)
+   add_definitions(-DBOXER_BUILD_DLL)
+   list(APPEND BOXER_DEFINITIONS
+      -DBOXER_DLL
+   )
+endif (BUILD_SHARED_LIBS)
 
 if (APPLE)
    list(APPEND SOURCES
@@ -44,12 +47,25 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
    add_definitions(${GTK3_CFLAGS_OTHER})
 endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
-set(BOXER_LIBRARIES ${LIBRARIES} CACHE STRING "Dependencies of Boxer")
-
 include_directories(${INC_DIR})
 add_library(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
-if (BUILD_EXAMPLES)
+# Compiler requirements
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+
+if(BUILD_SHARED_LIBS)
+   list(APPEND LIBRARIES
+      ${PROJECT_NAME}
+   )
+endif(BUILD_SHARED_LIBS)
+
+# Export
+set(BOXER_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
+set(BOXER_INCLUDE_DIR ${INC_DIR} PARENT_SCOPE)
+set(BOXER_DEFINITIONS ${BOXER_DEFINITIONS} PARENT_SCOPE)
+
+if (BOXER_BUILD_EXAMPLES)
    add_subdirectory(example)
 endif()
