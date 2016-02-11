@@ -46,7 +46,7 @@ static BoxerSelection getSelection(gint response) {
 
 BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle style, BoxerButtons buttons) {
    if (!gtk_init_check(0, NULL)) {
-      return BoxerSelectionNone;
+      return BoxerSelectionError;
    }
 
    GtkWidget *dialog = gtk_message_dialog_new(NULL,

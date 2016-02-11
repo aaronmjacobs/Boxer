@@ -44,7 +44,8 @@ typedef enum {
    BoxerSelectionCancel,
    BoxerSelectionYes,
    BoxerSelectionNo,
-   BoxerSelectionNone
+   BoxerSelectionNone,
+   BoxerSelectionError
 } BoxerSelection;
 
 static const BoxerStyle kBoxerDefaultStyle = BoxerStyleInfo;
