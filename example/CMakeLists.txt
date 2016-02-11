@@ -1,13 +1,10 @@
+# Project definition
 cmake_minimum_required(VERSION 3.1)
-project(Boxer-Examples)
+project(Boxer-Examples VERSION 1.0.0 LANGUAGES CXX)
 
-set(EXAMPLE_SOURCES "example.cpp")
-set(EXAMPLE_LIBRARIES ${CMAKE_PROJECT_NAME})
-
-include_directories(${INC_DIR})
-add_executable(${PROJECT_NAME} ${EXAMPLE_SOURCES})
-target_link_libraries(${PROJECT_NAME} ${EXAMPLE_LIBRARIES})
-
-# Compiler requirements
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
+# Executable definition and features
+add_executable(${PROJECT_NAME} "example.cpp")
+target_include_directories(${PROJECT_NAME} PRIVATE $<TARGET_PROPERTY:Boxer,INTERFACE_INCLUDE_DIRECTORIES>)
+target_link_libraries(${PROJECT_NAME} PRIVATE Boxer $<TARGET_PROPERTY:Boxer,INTERFACE_LINK_LIBRARIES>)
+target_compile_features(${PROJECT_NAME} PRIVATE $<TARGET_PROPERTY:Boxer,INTERFACE_COMPILE_FEATURES>)
+target_compile_definitions(${PROJECT_NAME} INTERFACE $<TARGET_PROPERTY:Boxer,INTERFACE_COMPILE_DEFINITIONS>)
