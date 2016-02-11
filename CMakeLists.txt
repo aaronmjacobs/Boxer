@@ -3,20 +3,20 @@ cmake_minimum_required(VERSION 3.1)
 project(Boxer VERSION 1.0.0 LANGUAGES CXX)
 
 # Source files
-set(BOXER_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
+set(BOXER_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(BOXER_SOURCES)
 set(BOXER_LINUX ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 if (APPLE)
    list(APPEND BOXER_SOURCES
-      "${BOXER_LIB_DIR}/boxer_osx.mm"
+      "${BOXER_SRC_DIR}/boxer_osx.mm"
    )
 elseif (WIN32)
    list(APPEND BOXER_SOURCES
-      "${BOXER_LIB_DIR}/boxer_win.cpp"
+      "${BOXER_SRC_DIR}/boxer_win.cpp"
    )
 elseif (BOXER_LINUX)
    list(APPEND BOXER_SOURCES
-      "${BOXER_LIB_DIR}/boxer_linux.cpp"
+      "${BOXER_SRC_DIR}/boxer_linux.cpp"
    )
 endif (APPLE)
 
@@ -43,7 +43,7 @@ if (BUILD_SHARED_LIBS)
 endif (BUILD_SHARED_LIBS)
 
 # Build options
-option(BOXER_BUILD_EXAMPLES "Build example program" OFF)
+option(BOXER_BUILD_EXAMPLES "Build example programs" OFF)
 if (BOXER_BUILD_EXAMPLES)
-   add_subdirectory(example)
+   add_subdirectory("examples")
 endif()
