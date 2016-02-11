@@ -75,6 +75,11 @@ BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle styl
    [alert setAlertStyle:getAlertStyle(style)];
    setButtons(alert, buttons);
 
+   // Force the alert to appear on top of any other windows
+   ProcessSerialNumber psn = { 0, kCurrentProcess };
+   TransformProcessType(&psn, kProcessTransformToUIElementApplication);
+   [[alert window] makeKeyWindow];
+
    BoxerSelection selection = getSelection([alert runModal], buttons);
    [alert release];
 
