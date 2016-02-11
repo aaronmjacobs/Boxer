@@ -26,7 +26,9 @@ Boxer is written in C++, though it has a C branch available as well.
 
 Boxer is set up to be built with CMake.
 
-To generate a static library, execute CMake with the root of the repo as the source directory. Additionally, the example program can be built by enabling the BUILD_EXAMPLES option.
+To generate a static library, execute CMake with the root of the repo as the source directory. Additionally, the example program can be built by enabling the BOXER_BUILD_EXAMPLES option.
+
+On Linux, Boxer requires the gtk+-3.0 package.
 
 ## Including Boxer
 
@@ -53,13 +55,13 @@ add_subdirectory("path/to/Boxer")
 Next, specify the the location of the Boxer header:
 
 ```cmake
-include_directories("path/to/Boxer/include")
+target_include_directories(<target> <INTERFACE|PUBLIC|PRIVATE> $<TARGET_PROPERTY:Boxer,INTERFACE_INCLUDE_DIRECTORIES>)
 ```
 
 Finally, link against the Boxer library:
 
 ```cmake
-target_link_libraries(myapp Boxer)
+target_link_libraries(<target> <INTERFACE|PUBLIC|PRIVATE> Boxer $<TARGET_PROPERTY:Boxer,INTERFACE_LINK_LIBRARIES>)
 ```
 
 ## Using Boxer
