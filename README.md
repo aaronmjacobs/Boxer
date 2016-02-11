@@ -26,13 +26,15 @@ Boxer is written in C++, though it has a C branch available as well.
 
 Boxer is set up to be built with CMake.
 
-To generate a static library, execute CMake with the root of the repo as the source directory. Additionally, the example program can be built by enabling the BUILD_EXAMPLES option.
+To generate a static library, execute CMake with the root of the repo as the source directory. Additionally, the example program can be built by enabling the BOXER_BUILD_EXAMPLES option.
+
+On Linux, Boxer requires the gtk+-3.0 package.
 
 ## Including Boxer
 
 Wherever you want to use Boxer, just include the header:
 
-```c
+```c++
 #include <boxer/boxer.h>
 ```
 
@@ -53,13 +55,13 @@ add_subdirectory("path/to/Boxer")
 Next, specify the the location of the Boxer header:
 
 ```cmake
-include_directories("path/to/Boxer/include")
+target_include_directories(<target> <INTERFACE|PUBLIC|PRIVATE> $<TARGET_PROPERTY:Boxer,INTERFACE_INCLUDE_DIRECTORIES>)
 ```
 
 Finally, link against the Boxer library:
 
 ```cmake
-target_link_libraries(myapp Boxer)
+target_link_libraries(<target> <INTERFACE|PUBLIC|PRIVATE> Boxer $<TARGET_PROPERTY:Boxer,INTERFACE_LINK_LIBRARIES>)
 ```
 
 ## Using Boxer
@@ -67,7 +69,7 @@ target_link_libraries(myapp Boxer)
 To create a message box using Boxer, call the 'boxerShow' method and provide a message, title, style, and buttons:
 
 ```c
-boxerShow("Simple message boxes are very easy to create.", "Simple Example", BOXER_DEFAULT_STYLE, BOXER_DEFAULT_BUTTONS);
+boxerShow("Simple message boxes are very easy to create.", "Simple Example", kBoxerDefaultStyle, kBoxerDefaultButtons);
 ```
 
 Different styles / buttons may be specified, and the user's selection can be determined from the function's return value:
