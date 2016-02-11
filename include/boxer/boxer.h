@@ -46,7 +46,8 @@ enum class Selection {
    Cancel,
    Yes,
    No,
-   None
+   None,
+   Error
 };
 
 const Style kDefaultStyle = Style::Info;

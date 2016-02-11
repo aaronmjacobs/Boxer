@@ -52,7 +52,7 @@ Selection getSelection(gint response) {
 
 Selection show(const char *message, const char *title, Style style, Buttons buttons) {
    if (!gtk_init_check(0, nullptr)) {
-      return Selection::None;
+      return Selection::Error;
    }
 
    GtkWidget *dialog = gtk_message_dialog_new(nullptr,
