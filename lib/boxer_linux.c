@@ -49,7 +49,10 @@ BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle styl
       return BoxerSelectionError;
    }
 
-   GtkWidget *dialog = gtk_message_dialog_new(NULL,
+   // Create a parent window to stop gtk_dialog_run from complaining
+   GtkWidget *parent = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+   GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(parent),
                                               GTK_DIALOG_MODAL,
                                               getMessageType(style),
                                               getButtonsType(buttons),
@@ -59,6 +62,7 @@ BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle styl
    BoxerSelection selection = getSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
 
    gtk_widget_destroy(GTK_WIDGET(dialog));
+   gtk_widget_destroy(GTK_WIDGET(parent));
    while (g_main_context_iteration(NULL, FALSE));
 
    return selection;
