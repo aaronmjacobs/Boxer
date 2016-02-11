@@ -28,11 +28,11 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_strong_enums cxx_nullptr)
 # Platform-specific dependencies
 if (APPLE)
    find_library(COCOA_LIBRARY Cocoa)
-   target_link_libraries(${PROJECT_NAME} PRIVATE ${COCOA_LIBRARY})
+   target_link_libraries(${PROJECT_NAME} PUBLIC ${COCOA_LIBRARY})
 elseif (BOXER_LINUX)
    find_package(PkgConfig REQUIRED)
    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
-   target_link_libraries(${PROJECT_NAME} PRIVATE ${GTK3_LIBRARIES})
+   target_link_libraries(${PROJECT_NAME} PUBLIC ${GTK3_LIBRARIES})
    target_include_directories(${PROJECT_NAME} PRIVATE ${GTK3_INCLUDE_DIRS})
 endif (APPLE)
 
