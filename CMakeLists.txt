@@ -1,50 +1,48 @@
-cmake_minimum_required(VERSION 2.8)
-project(Boxer)
+# Project definition
+cmake_minimum_required(VERSION 3.1)
+project(Boxer VERSION 1.0.0 LANGUAGES C)
 
-option(BUILD_EXAMPLES "Build example program" OFF)
-
-set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
-set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
-
-set(SOURCES "")
-set(LIBRARIES "")
-
+# Source files
+set(BOXER_LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
+set(BOXER_SOURCES)
+set(BOXER_LINUX ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 if (APPLE)
-   list(APPEND SOURCES
-      "${LIB_DIR}/boxer_osx.m"
+   list(APPEND BOXER_SOURCES
+      "${BOXER_LIB_DIR}/boxer_osx.m"
    )
-   find_library(COCOA_LIBRARY Cocoa)
-   list(APPEND LIBRARIES
-      ${COCOA_LIBRARY}
+elseif (WIN32)
+   list(APPEND BOXER_SOURCES
+      "${BOXER_LIB_DIR}/boxer_win.c"
+   )
+elseif (BOXER_LINUX)
+   list(APPEND BOXER_SOURCES
+      "${BOXER_LIB_DIR}/boxer_linux.c"
    )
 endif (APPLE)
 
-if (WIN32)
-   list(APPEND SOURCES
-      "${LIB_DIR}/boxer_win.c"
-   )
-endif (WIN32)
+# Library definition and features
+add_library(${PROJECT_NAME} ${BOXER_SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-   list(APPEND SOURCES
-      "${LIB_DIR}/boxer_linux.c"
-   )
+# Platform-specific dependencies
+if (APPLE)
+   find_library(COCOA_LIBRARY Cocoa)
+   target_link_libraries(${PROJECT_NAME} PUBLIC ${COCOA_LIBRARY})
+elseif (BOXER_LINUX)
    find_package(PkgConfig REQUIRED)
    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
-   list(APPEND LIBRARIES
-      ${GTK3_LIBRARIES}
-   )
-   include_directories(${GTK3_INCLUDE_DIRS})
-   link_directories(${GTK3_LIBRARY_DIRS})
-   add_definitions(${GTK3_CFLAGS_OTHER})
-endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+   target_link_libraries(${PROJECT_NAME} PUBLIC ${GTK3_LIBRARIES})
+   target_include_directories(${PROJECT_NAME} PRIVATE ${GTK3_INCLUDE_DIRS})
+endif (APPLE)
 
-set(BOXER_LIBRARIES ${LIBRARIES} CACHE STRING "Dependencies of Boxer")
+# Symbol exporting
+if (BUILD_SHARED_LIBS)
+   target_compile_definitions(${PROJECT_NAME} PRIVATE "BOXER_BUILD_DLL")
+   target_compile_definitions(${PROJECT_NAME} INTERFACE "BOXER_DLL")
+endif (BUILD_SHARED_LIBS)
 
-include_directories(${INC_DIR})
-add_library(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
-
-if (BUILD_EXAMPLES)
+# Build options
+option(BOXER_BUILD_EXAMPLES "Build example program" OFF)
+if (BOXER_BUILD_EXAMPLES)
    add_subdirectory(example)
 endif()

@@ -1,10 +1,10 @@
 #include <boxer/boxer.h>
 #import <Cocoa/Cocoa.h>
 
-static NSString* const OK_STR = @"OK";
-static NSString* const CANCEL_STR = @"Cancel";
-static NSString* const YES_STR = @"Yes";
-static NSString* const NO_STR = @"No";
+static NSString* const kOkStr = @"OK";
+static NSString* const kCancelStr = @"Cancel";
+static NSString* const kYesStr = @"Yes";
+static NSString* const kNoStr = @"No";
 
 static NSAlertStyle getAlertStyle(BoxerStyle style) {
    switch (style) {
@@ -24,18 +24,18 @@ static NSAlertStyle getAlertStyle(BoxerStyle style) {
 static void setButtons(NSAlert *alert, BoxerButtons buttons) {
    switch (buttons) {
       case BoxerButtonsOK:
-         [alert addButtonWithTitle:OK_STR];
+         [alert addButtonWithTitle:kOkStr];
          break;
       case BoxerButtonsOKCancel:
-         [alert addButtonWithTitle:OK_STR];
-         [alert addButtonWithTitle:CANCEL_STR];
+         [alert addButtonWithTitle:kOkStr];
+         [alert addButtonWithTitle:kCancelStr];
          break;
       case BoxerButtonsYesNo:
-         [alert addButtonWithTitle:YES_STR];
-         [alert addButtonWithTitle:NO_STR];
+         [alert addButtonWithTitle:kYesStr];
+         [alert addButtonWithTitle:kNoStr];
          break;
       default:
-         [alert addButtonWithTitle:OK_STR];
+         [alert addButtonWithTitle:kOkStr];
    }
 }
 
