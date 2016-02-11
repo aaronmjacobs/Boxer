@@ -56,7 +56,7 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
    flags |= getIcon(style);
    flags |= getButtons(buttons);
 
-   return getSelection(MessageBox(NULL, message, title, flags));
+   return getSelection(MessageBox(nullptr, message, title, flags));
 }
 
 } // namespace boxer

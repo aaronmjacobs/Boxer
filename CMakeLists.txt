@@ -23,7 +23,7 @@ endif (APPLE)
 # Library definition and features
 add_library(${PROJECT_NAME} ${BOXER_SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_strong_enums)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_strong_enums cxx_nullptr)
 
 # Platform-specific dependencies
 if (APPLE)

@@ -28,20 +28,20 @@
 
 namespace boxer {
 
-enum class BOXERAPI Style {
+enum class Style {
    Info,
    Warning,
    Error,
    Question
 };
 
-enum class BOXERAPI Buttons {
+enum class Buttons {
    OK,
    OKCancel,
    YesNo
 };
 
-enum class BOXERAPI Selection {
+enum class Selection {
    OK,
    Cancel,
    Yes,
@@ -49,21 +49,21 @@ enum class BOXERAPI Selection {
    None
 };
 
-const Style DEFAULT_STYLE = Style::Info;
-const Buttons DEFAULT_BUTTONS = Buttons::OK;
+const Style kDefaultStyle = Style::Info;
+const Buttons kDefaultButtons = Buttons::OK;
 
 BOXERAPI Selection show(const char *message, const char *title, Style style, Buttons buttons);
 
 inline Selection show(const char *message, const char *title, Style style) {
-   return show(message, title, style, DEFAULT_BUTTONS);
+   return show(message, title, style, kDefaultButtons);
 }
 
 inline Selection show(const char *message, const char *title, Buttons buttons) {
-   return show(message, title, DEFAULT_STYLE, buttons);
+   return show(message, title, kDefaultStyle, buttons);
 }
 
 inline Selection show(const char *message, const char *title) {
-   return show(message, title, DEFAULT_STYLE, DEFAULT_BUTTONS);
+   return show(message, title, kDefaultStyle, kDefaultButtons);
 }
 
 } // namespace boxer

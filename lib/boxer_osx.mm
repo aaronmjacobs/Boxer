@@ -5,10 +5,10 @@ namespace boxer {
 
 namespace {
 
-NSString* const OK_STR = @"OK";
-NSString* const CANCEL_STR = @"Cancel";
-NSString* const YES_STR = @"Yes";
-NSString* const NO_STR = @"No";
+NSString* const kOkStr = @"OK";
+NSString* const kCancelStr = @"Cancel";
+NSString* const kYesStr = @"Yes";
+NSString* const kNoStr = @"No";
 
 NSAlertStyle getAlertStyle(Style style) {
    switch (style) {
@@ -28,18 +28,18 @@ NSAlertStyle getAlertStyle(Style style) {
 void setButtons(NSAlert *alert, Buttons buttons) {
    switch (buttons) {
       case Buttons::OK:
-         [alert addButtonWithTitle:OK_STR];
+         [alert addButtonWithTitle:kOkStr];
          break;
       case Buttons::OKCancel:
-         [alert addButtonWithTitle:OK_STR];
-         [alert addButtonWithTitle:CANCEL_STR];
+         [alert addButtonWithTitle:kOkStr];
+         [alert addButtonWithTitle:kCancelStr];
          break;
       case Buttons::YesNo:
-         [alert addButtonWithTitle:YES_STR];
-         [alert addButtonWithTitle:NO_STR];
+         [alert addButtonWithTitle:kYesStr];
+         [alert addButtonWithTitle:kNoStr];
          break;
       default:
-         [alert addButtonWithTitle:OK_STR];
+         [alert addButtonWithTitle:kOkStr];
    }
 }
 

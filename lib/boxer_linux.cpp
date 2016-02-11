@@ -51,11 +51,11 @@ Selection getSelection(gint response) {
 } // namespace
 
 Selection show(const char *message, const char *title, Style style, Buttons buttons) {
-   if (!gtk_init_check(0, NULL)) {
+   if (!gtk_init_check(0, nullptr)) {
       return Selection::None;
    }
 
-   GtkWidget *dialog = gtk_message_dialog_new(NULL,
+   GtkWidget *dialog = gtk_message_dialog_new(nullptr,
                                               GTK_DIALOG_MODAL,
                                               getMessageType(style),
                                               getButtonsType(buttons),
@@ -65,7 +65,7 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
    Selection selection = getSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
 
    gtk_widget_destroy(GTK_WIDGET(dialog));
-   while (g_main_context_iteration(NULL, false));
+   while (g_main_context_iteration(nullptr, false));
 
    return selection;
 }
