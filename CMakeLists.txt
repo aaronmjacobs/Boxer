@@ -1,45 +1,47 @@
 # Project definition
 cmake_minimum_required(VERSION 3.1)
-project(Boxer VERSION 1.0.0 LANGUAGES C)
+project(Boxer VERSION 1.0.0 LANGUAGES CXX)
+
+set(LINUX ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Source files
-set(BOXER_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
-set(BOXER_SOURCES)
-set(BOXER_LINUX ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(SOURCES "${INC_DIR}/boxer/boxer.h")
 if (APPLE)
-   list(APPEND BOXER_SOURCES
-      "${BOXER_SRC_DIR}/boxer_osx.m"
+   list(APPEND SOURCES
+      "${SRC_DIR}/boxer_osx.m"
    )
 elseif (WIN32)
-   list(APPEND BOXER_SOURCES
-      "${BOXER_SRC_DIR}/boxer_win.c"
+   list(APPEND SOURCES
+      "${SRC_DIR}/boxer_win.c"
    )
-elseif (BOXER_LINUX)
-   list(APPEND BOXER_SOURCES
-      "${BOXER_SRC_DIR}/boxer_linux.c"
+elseif (LINUX)
+   list(APPEND SOURCES
+      "${SRC_DIR}/boxer_linux.c"
    )
-endif (APPLE)
+endif ()
 
 # Library definition and features
-add_library(${PROJECT_NAME} ${BOXER_SOURCES})
-target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+add_library(${PROJECT_NAME} ${SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC "${INC_DIR}")
 
 # Platform-specific dependencies
 if (APPLE)
    find_library(COCOA_LIBRARY Cocoa)
    target_link_libraries(${PROJECT_NAME} PUBLIC ${COCOA_LIBRARY})
-elseif (BOXER_LINUX)
+elseif (LINUX)
    find_package(PkgConfig REQUIRED)
    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
    target_link_libraries(${PROJECT_NAME} PUBLIC ${GTK3_LIBRARIES})
    target_include_directories(${PROJECT_NAME} PRIVATE ${GTK3_INCLUDE_DIRS})
-endif (APPLE)
+endif ()
 
 # Symbol exporting
 if (BUILD_SHARED_LIBS)
    target_compile_definitions(${PROJECT_NAME} PRIVATE "BOXER_BUILD_DLL")
    target_compile_definitions(${PROJECT_NAME} INTERFACE "BOXER_DLL")
-endif (BUILD_SHARED_LIBS)
+endif ()
 
 # Build options
 option(BOXER_BUILD_EXAMPLES "Build example programs" OFF)
