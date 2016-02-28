@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(Boxer VERSION 1.0.0 LANGUAGES CXX)
 
-set(LINUX ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+#set(LINUX ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Source files
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -16,7 +16,7 @@ elseif (WIN32)
    list(APPEND SOURCES
       "${SRC_DIR}/boxer_win.cpp"
    )
-elseif (LINUX)
+elseif (UNIX)
    list(APPEND SOURCES
       "${SRC_DIR}/boxer_linux.cpp"
    )
@@ -31,7 +31,7 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_strong_enums cxx_nullptr)
 if (APPLE)
    find_library(COCOA_LIBRARY Cocoa)
    target_link_libraries(${PROJECT_NAME} PUBLIC ${COCOA_LIBRARY})
-elseif (LINUX)
+elseif (UNIX)
    find_package(PkgConfig REQUIRED)
    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
    target_link_libraries(${PROJECT_NAME} PUBLIC ${GTK3_LIBRARIES})
