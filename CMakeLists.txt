@@ -29,7 +29,7 @@ endif ()
 add_library(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC "${INC_DIR}")
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_strong_enums cxx_nullptr)
-
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 # Platform-specific dependencies
 if (APPLE)
    find_library(COCOA_LIBRARY Cocoa)
