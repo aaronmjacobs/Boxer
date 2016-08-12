@@ -23,6 +23,7 @@ UINT getIcon(Style style) {
 UINT getButtons(Buttons buttons) {
    switch (buttons) {
       case Buttons::OK:
+      case Buttons::Quit: // There is no 'Quit' button on windows :(
          return MB_OK;
       case Buttons::OKCancel:
          return MB_OKCANCEL;
