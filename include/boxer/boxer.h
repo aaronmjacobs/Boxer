@@ -44,7 +44,8 @@ enum class Style {
 enum class Buttons {
    OK,
    OKCancel,
-   YesNo
+   YesNo,
+   Quit
 };
 
 /*!

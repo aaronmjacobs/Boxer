@@ -9,6 +9,7 @@ NSString* const kOkStr = @"OK";
 NSString* const kCancelStr = @"Cancel";
 NSString* const kYesStr = @"Yes";
 NSString* const kNoStr = @"No";
+NSString* const kQuitStr = @"Quit";
 
 NSAlertStyle getAlertStyle(Style style) {
    switch (style) {
@@ -38,6 +39,9 @@ void setButtons(NSAlert *alert, Buttons buttons) {
          [alert addButtonWithTitle:kYesStr];
          [alert addButtonWithTitle:kNoStr];
          break;
+     case Buttons::Quit:
+         [alert addButtonWithTitle:kQuitStr];
+       break;
       default:
          [alert addButtonWithTitle:kOkStr];
    }

@@ -28,6 +28,8 @@ GtkButtonsType getButtonsType(Buttons buttons) {
          return GTK_BUTTONS_OK_CANCEL;
       case Buttons::YesNo:
          return GTK_BUTTONS_YES_NO;
+     case Buttons::Quit:
+         return GTK_BUTTONS_CLOSE;
       default:
          return GTK_BUTTONS_OK;
    }
