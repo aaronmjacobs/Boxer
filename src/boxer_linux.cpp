@@ -45,6 +45,8 @@ Selection getSelection(gint response) {
          return Selection::Yes;
       case GTK_RESPONSE_NO:
          return Selection::No;
+      case GTK_RESPONSE_CLOSE:
+         return Selection::Quit;
       default:
          return Selection::None;
    }

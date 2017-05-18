@@ -34,10 +34,10 @@ UINT getButtons(Buttons buttons) {
    }
 }
 
-Selection getSelection(int response) {
+Selection getSelection(int response, Buttons buttons) {
    switch (response) {
       case IDOK:
-         return Selection::OK;
+         return buttons == Buttons::Quit ? Selection::Quit : Selection::OK;
       case IDCANCEL:
          return Selection::Cancel;
       case IDYES:
@@ -57,7 +57,7 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
    flags |= getIcon(style);
    flags |= getButtons(buttons);
 
-   return getSelection(MessageBox(nullptr, message, title, flags));
+   return getSelection(MessageBox(nullptr, message, title, flags), buttons);
 }
 
 } // namespace boxer

@@ -82,6 +82,8 @@ Selection getSelection(int index, Buttons buttons) {
          } else {
             return Selection::None;
          }
+      case Buttons::Quit:
+         return index == NSAlertFirstButtonReturn ? Selection::Quit : Selection::None;
       default:
          return Selection::None;
    }

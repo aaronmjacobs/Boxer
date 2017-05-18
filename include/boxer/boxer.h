@@ -57,6 +57,7 @@ enum class Selection {
    Cancel,
    Yes,
    No,
+   Quit,
    None,
    Error
 };
