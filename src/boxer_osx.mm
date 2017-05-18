@@ -12,6 +12,20 @@ NSString* const kNoStr = @"No";
 NSString* const kQuitStr = @"Quit";
 
 NSAlertStyle getAlertStyle(Style style) {
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
+   switch (style) {
+      case Style::Info:
+         return NSAlertStyleInformational;
+      case Style::Warning:
+         return NSAlertStyleWarning;
+      case Style::Error:
+         return NSAlertStyleCritical;
+      case Style::Question:
+         return NSAlertStyleWarning;
+      default:
+         return NSAlertStyleInformational;
+   }
+#else
    switch (style) {
       case Style::Info:
          return NSInformationalAlertStyle;
@@ -24,6 +38,7 @@ NSAlertStyle getAlertStyle(Style style) {
       default:
          return NSInformationalAlertStyle;
    }
+#endif
 }
 
 void setButtons(NSAlert *alert, Buttons buttons) {
