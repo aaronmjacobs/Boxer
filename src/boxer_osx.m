@@ -5,7 +5,7 @@ static NSString* const kOkStr = @"OK";
 static NSString* const kCancelStr = @"Cancel";
 static NSString* const kYesStr = @"Yes";
 static NSString* const kNoStr = @"No";
-static NSString* const kNoStr = @"Quit";
+static NSString* const kQuitStr = @"Quit";
 
 static NSAlertStyle getAlertStyle(BoxerStyle style) {
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
