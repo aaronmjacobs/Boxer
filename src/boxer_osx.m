@@ -8,6 +8,20 @@ static NSString* const kNoStr = @"No";
 static NSString* const kNoStr = @"Quit";
 
 static NSAlertStyle getAlertStyle(BoxerStyle style) {
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
+   switch (style) {
+      case BoxerStyleInfo:
+         return NSAlertStyleInformational;
+      case BoxerStyleWarning:
+         return NSAlertStyleWarning;
+      case BoxerStyleError:
+         return NSAlertStyleCritical;
+      case BoxerStyleQuestion:
+         return NSAlertStyleWarning;
+      default:
+         return NSAlertStyleInformational;
+   }
+#else
    switch (style) {
       case BoxerStyleInfo:
          return NSInformationalAlertStyle;
@@ -20,6 +34,7 @@ static NSAlertStyle getAlertStyle(BoxerStyle style) {
       default:
          return NSInformationalAlertStyle;
    }
+#endif
 }
 
 static void setButtons(NSAlert *alert, BoxerButtons buttons) {
