@@ -80,9 +80,7 @@ BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle styl
    setButtons(alert, buttons);
 
    // Force the alert to appear on top of any other windows
-   ProcessSerialNumber psn = { 0, kCurrentProcess };
-   TransformProcessType(&psn, kProcessTransformToUIElementApplication);
-   [[alert window] makeKeyWindow];
+   [[alert window] setLevel:NSModalPanelWindowLevel];
 
    BoxerSelection selection = getSelection([alert runModal], buttons);
    [alert release];
