@@ -42,7 +42,8 @@ typedef enum {
 typedef enum {
    BoxerButtonsOK,
    BoxerButtonsOKCancel,
-   BoxerButtonsYesNo
+   BoxerButtonsYesNo,
+   BoxerButtonsQuit
 } BoxerButtons;
 
 /*!

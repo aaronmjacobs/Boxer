@@ -19,6 +19,7 @@ static UINT getIcon(BoxerStyle style) {
 static UINT getButtons(BoxerButtons buttons) {
    switch (buttons) {
       case BoxerButtonsOK:
+      case BoxerButtonsQuit: // There is no 'Quit' button on windows :(
          return MB_OK;
       case BoxerButtonsOKCancel:
          return MB_OKCANCEL;

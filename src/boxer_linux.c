@@ -24,6 +24,8 @@ static GtkButtonsType getButtonsType(BoxerButtons buttons) {
          return GTK_BUTTONS_OK_CANCEL;
       case BoxerButtonsYesNo:
          return GTK_BUTTONS_YES_NO;
+      case BoxerButtonsQuit:
+         return GTK_BUTTONS_CLOSE;
       default:
          return GTK_BUTTONS_OK;
    }

@@ -5,6 +5,7 @@ static NSString* const kOkStr = @"OK";
 static NSString* const kCancelStr = @"Cancel";
 static NSString* const kYesStr = @"Yes";
 static NSString* const kNoStr = @"No";
+static NSString* const kNoStr = @"Quit";
 
 static NSAlertStyle getAlertStyle(BoxerStyle style) {
    switch (style) {
@@ -33,6 +34,9 @@ static void setButtons(NSAlert *alert, BoxerButtons buttons) {
       case BoxerButtonsYesNo:
          [alert addButtonWithTitle:kYesStr];
          [alert addButtonWithTitle:kNoStr];
+         break;
+      case BoxerButtonsQuit:
+         [alert addButtonWithTitle:kQuitStr];
          break;
       default:
          [alert addButtonWithTitle:kOkStr];
