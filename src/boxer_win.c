@@ -1,4 +1,5 @@
 #include <boxer/boxer.h>
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 static UINT getIcon(BoxerStyle style) {
@@ -19,7 +20,7 @@ static UINT getIcon(BoxerStyle style) {
 static UINT getButtons(BoxerButtons buttons) {
    switch (buttons) {
       case BoxerButtonsOK:
-      case BoxerButtonsQuit: // There is no 'Quit' button on windows :(
+      case BoxerButtonsQuit: // There is no 'Quit' button on Windows :(
          return MB_OK;
       case BoxerButtonsOKCancel:
          return MB_OKCANCEL;
