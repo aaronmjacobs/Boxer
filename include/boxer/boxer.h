@@ -55,6 +55,7 @@ typedef enum {
    BoxerSelectionCancel,
    BoxerSelectionYes,
    BoxerSelectionNo,
+   BoxerSelectionQuit,
    BoxerSelectionNone,
    BoxerSelectionError
 } BoxerSelection;

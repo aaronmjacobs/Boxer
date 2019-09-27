@@ -78,6 +78,8 @@ static BoxerSelection getSelection(int index, BoxerButtons buttons) {
          } else {
             return BoxerSelectionNone;
          }
+      case BoxerButtonsQuit:
+         return index == NSAlertFirstButtonReturn ? BoxerSelectionQuit : BoxerSelectionNone;
       default:
          return BoxerSelectionNone;
    }

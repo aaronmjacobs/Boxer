@@ -30,10 +30,10 @@ static UINT getButtons(BoxerButtons buttons) {
    }
 }
 
-static BoxerSelection getSelection(int response) {
+static BoxerSelection getSelection(int response, Buttons buttons) {
    switch (response) {
       case IDOK:
-         return BoxerSelectionOK;
+         return buttons == BoxerButtonsQuit ? BoxerSelectionQuit : BoxerSelectionOK;
       case IDCANCEL:
          return BoxerSelectionCancel;
       case IDYES:
@@ -51,5 +51,5 @@ BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle styl
    flags |= getIcon(style);
    flags |= getButtons(buttons);
 
-   return getSelection(MessageBox(NULL, message, title, flags));
+   return getSelection(MessageBox(NULL, message, title, flags), buttons);
 }

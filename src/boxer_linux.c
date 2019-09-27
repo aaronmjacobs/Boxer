@@ -41,6 +41,8 @@ static BoxerSelection getSelection(gint response) {
          return BoxerSelectionYes;
       case GTK_RESPONSE_NO:
          return BoxerSelectionNo;
+      case GTK_RESPONSE_CLOSE:
+         return BoxerSelectionQuit;
       default:
          return BoxerSelectionNone;
    }
