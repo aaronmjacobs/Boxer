@@ -31,7 +31,7 @@ static UINT getButtons(BoxerButtons buttons) {
    }
 }
 
-static BoxerSelection getSelection(int response, Buttons buttons) {
+static BoxerSelection getSelection(int response, BoxerButtons buttons) {
    switch (response) {
       case IDOK:
          return buttons == BoxerButtonsQuit ? BoxerSelectionQuit : BoxerSelectionOK;
