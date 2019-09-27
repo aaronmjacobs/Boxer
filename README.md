@@ -52,16 +52,10 @@ To compile Boxer along with another application using CMake, first add the Boxer
 add_subdirectory("path/to/Boxer")
 ```
 
-Next, specify the the location of the Boxer header:
+Then link against the Boxer library:
 
 ```cmake
-target_include_directories(<target> <INTERFACE|PUBLIC|PRIVATE> $<TARGET_PROPERTY:Boxer,INTERFACE_INCLUDE_DIRECTORIES>)
-```
-
-Finally, link against the Boxer library:
-
-```cmake
-target_link_libraries(<target> <INTERFACE|PUBLIC|PRIVATE> Boxer $<TARGET_PROPERTY:Boxer,INTERFACE_LINK_LIBRARIES>)
+target_link_libraries(<target> <INTERFACE|PUBLIC|PRIVATE> Boxer)
 ```
 
 ## Using Boxer
