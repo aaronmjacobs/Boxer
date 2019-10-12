@@ -1,6 +1,6 @@
 # Project definition
 cmake_minimum_required(VERSION 3.1)
-project(Boxer VERSION 1.0.0 LANGUAGES CXX)
+project(Boxer VERSION 1.0.0 LANGUAGES C)
 
 set(LINUX FALSE)
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
