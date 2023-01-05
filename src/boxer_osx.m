@@ -1,6 +1,24 @@
 #include <boxer/boxer.h>
 #import <Cocoa/Cocoa.h>
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
+static const NSAlertStyle kInformationalStyle = NSAlertStyleInformational;
+static const NSAlertStyle kWarningStyle = NSAlertStyleWarning;
+static const NSAlertStyle kCriticalStyle = NSAlertStyleCritical;
+#else
+static const NSAlertStyle kInformationalStyle = NSInformationalAlertStyle;
+static const NSAlertStyle kWarningStyle = NSWarningAlertStyle;
+static const NSAlertStyle kCriticalStyle = NSCriticalAlertStyle;
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
+typedef NSModalResponse ModalResponse;
+#elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+typedef NSInteger ModalResponse;
+#else
+typedef int ModalResponse;
+#endif
+
 static NSString* const kOkStr = @"OK";
 static NSString* const kCancelStr = @"Cancel";
 static NSString* const kYesStr = @"Yes";
@@ -8,33 +26,18 @@ static NSString* const kNoStr = @"No";
 static NSString* const kQuitStr = @"Quit";
 
 static NSAlertStyle getAlertStyle(BoxerStyle style) {
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
    switch (style) {
       case BoxerStyleInfo:
-         return NSAlertStyleInformational;
+         return kInformationalStyle;
       case BoxerStyleWarning:
-         return NSAlertStyleWarning;
+         return kWarningStyle;
       case BoxerStyleError:
-         return NSAlertStyleCritical;
+         return kCriticalStyle;
       case BoxerStyleQuestion:
-         return NSAlertStyleWarning;
+         return kWarningStyle;
       default:
-         return NSAlertStyleInformational;
+         return kInformationalStyle;
    }
-#else
-   switch (style) {
-      case BoxerStyleInfo:
-         return NSInformationalAlertStyle;
-      case BoxerStyleWarning:
-         return NSWarningAlertStyle;
-      case BoxerStyleError:
-         return NSCriticalAlertStyle;
-      case BoxerStyleQuestion:
-         return NSWarningAlertStyle;
-      default:
-         return NSInformationalAlertStyle;
-   }
-#endif
 }
 
 static void setButtons(NSAlert *alert, BoxerButtons buttons) {
@@ -58,7 +61,7 @@ static void setButtons(NSAlert *alert, BoxerButtons buttons) {
    }
 }
 
-static BoxerSelection getSelection(int index, BoxerButtons buttons) {
+static BoxerSelection getSelection(ModalResponse index, BoxerButtons buttons) {
    switch (buttons) {
       case BoxerButtonsOK:
          return index == NSAlertFirstButtonReturn ? BoxerSelectionOK : BoxerSelectionNone;

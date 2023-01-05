@@ -1,6 +1,8 @@
 #include <boxer/boxer.h>
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+#endif
+#include <Windows.h>
 
 static UINT getIcon(BoxerStyle style) {
    switch (style) {
