@@ -5,6 +5,24 @@ namespace boxer {
 
 namespace {
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
+const NSAlertStyle kInformationalStyle = NSAlertStyleInformational;
+const NSAlertStyle kWarningStyle = NSAlertStyleWarning;
+const NSAlertStyle kCriticalStyle = NSAlertStyleCritical;
+#else
+const NSAlertStyle kInformationalStyle = NSInformationalAlertStyle;
+const NSAlertStyle kWarningStyle = NSWarningAlertStyle;
+const NSAlertStyle kCriticalStyle = NSCriticalAlertStyle;
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
+using ModalResponse = NSModalResponse;
+#elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+using ModalResponse = NSInteger;
+#else
+using ModalResponse = int;
+#endif
+
 NSString* const kOkStr = @"OK";
 NSString* const kCancelStr = @"Cancel";
 NSString* const kYesStr = @"Yes";
@@ -12,33 +30,18 @@ NSString* const kNoStr = @"No";
 NSString* const kQuitStr = @"Quit";
 
 NSAlertStyle getAlertStyle(Style style) {
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
    switch (style) {
       case Style::Info:
-         return NSAlertStyleInformational;
+         return kInformationalStyle;
       case Style::Warning:
-         return NSAlertStyleWarning;
+         return kWarningStyle;
       case Style::Error:
-         return NSAlertStyleCritical;
+         return kCriticalStyle;
       case Style::Question:
-         return NSAlertStyleWarning;
+         return kWarningStyle;
       default:
-         return NSAlertStyleInformational;
+         return kInformationalStyle;
    }
-#else
-   switch (style) {
-      case Style::Info:
-         return NSInformationalAlertStyle;
-      case Style::Warning:
-         return NSWarningAlertStyle;
-      case Style::Error:
-         return NSCriticalAlertStyle;
-      case Style::Question:
-         return NSWarningAlertStyle;
-      default:
-         return NSInformationalAlertStyle;
-   }
-#endif
 }
 
 void setButtons(NSAlert *alert, Buttons buttons) {
@@ -62,7 +65,7 @@ void setButtons(NSAlert *alert, Buttons buttons) {
    }
 }
 
-Selection getSelection(int index, Buttons buttons) {
+Selection getSelection(ModalResponse index, Buttons buttons) {
    switch (buttons) {
       case Buttons::OK:
          return index == NSAlertFirstButtonReturn ? Selection::OK : Selection::None;
