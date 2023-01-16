@@ -5,7 +5,7 @@ namespace boxer {
 
 namespace {
 
-#if defined MAC_OS_X_VERSION_10_12 && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
+#if defined(MAC_OS_X_VERSION_10_12) && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
 const NSAlertStyle kInformationalStyle = NSAlertStyleInformational;
 const NSAlertStyle kWarningStyle = NSAlertStyleWarning;
 const NSAlertStyle kCriticalStyle = NSAlertStyleCritical;
@@ -15,9 +15,9 @@ const NSAlertStyle kWarningStyle = NSWarningAlertStyle;
 const NSAlertStyle kCriticalStyle = NSCriticalAlertStyle;
 #endif
 
-#if defined MAC_OS_X_VERSION_10_9 && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
+#if defined(MAC_OS_X_VERSION_10_9) && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
 using ModalResponse = NSModalResponse;
-#elif defined MAC_OS_X_VERSION_10_5 && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+#elif defined(MAC_OS_X_VERSION_10_5) && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
 using ModalResponse = NSInteger;
 #else
 using ModalResponse = int;
