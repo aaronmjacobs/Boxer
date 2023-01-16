@@ -1,7 +1,7 @@
 #include <boxer/boxer.h>
 #import <Cocoa/Cocoa.h>
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
+#if defined MAC_OS_X_VERSION_10_12 && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12
 static const NSAlertStyle kInformationalStyle = NSAlertStyleInformational;
 static const NSAlertStyle kWarningStyle = NSAlertStyleWarning;
 static const NSAlertStyle kCriticalStyle = NSAlertStyleCritical;
@@ -11,9 +11,9 @@ static const NSAlertStyle kWarningStyle = NSWarningAlertStyle;
 static const NSAlertStyle kCriticalStyle = NSCriticalAlertStyle;
 #endif
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
+#if defined MAC_OS_X_VERSION_10_9 && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
 typedef NSModalResponse ModalResponse;
-#elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+#elif defined MAC_OS_X_VERSION_10_5 && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
 typedef NSInteger ModalResponse;
 #else
 typedef int ModalResponse;
