@@ -97,10 +97,8 @@ Selection getSelection(ModalResponse index, Buttons buttons) {
 Selection show(const char *message, const char *title, Style style, Buttons buttons) {
    NSAlert *alert = [[NSAlert alloc] init];
 
-   [alert setMessageText:[NSString stringWithCString:title
-                                   encoding:[NSString defaultCStringEncoding]]];
-   [alert setInformativeText:[NSString stringWithCString:message
-                                       encoding:[NSString defaultCStringEncoding]]];
+   [alert setMessageText:[NSString stringWithUTF8String:title]];
+   [alert setInformativeText:[NSString stringWithUTF8String:message]];
 
    [alert setAlertStyle:getAlertStyle(style)];
    setButtons(alert, buttons);

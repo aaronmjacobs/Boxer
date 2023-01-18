@@ -1,4 +1,5 @@
 #include <boxer/boxer.h>
+#include <string>
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
@@ -7,6 +8,18 @@
 namespace boxer {
 
 namespace {
+
+#if defined(UNICODE)
+bool utf8ToUtf16(const char* utf8String, std::wstring& utf16String) {
+    int count = MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, nullptr, 0);
+    if (count <= 0) {
+        return false;
+    }
+
+    utf16String = std::wstring(static_cast<size_t>(count), L'\0');
+    return MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, &utf16String[0], count) > 0;
+}
+#endif // defined(UNICODE)
 
 UINT getIcon(Style style) {
    switch (style) {
@@ -60,7 +73,21 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
    flags |= getIcon(style);
    flags |= getButtons(buttons);
 
-   return getSelection(MessageBox(nullptr, message, title, flags), buttons);
+ #if defined(UNICODE)
+   std::wstring wideMessage;
+   std::wstring wideTitle;
+   if (!utf8ToUtf16(message, wideMessage) || !utf8ToUtf16(title, wideTitle)) {
+       return Selection::Error;
+   }
+
+   const WCHAR* messageArg = wideMessage.c_str();
+   const WCHAR* titleArg = wideTitle.c_str();
+#else
+   const char* messageArg = message;
+   const char* titleArg = title;
+#endif
+
+   return getSelection(MessageBox(nullptr, messageArg, titleArg, flags), buttons);
 }
 
 } // namespace boxer
