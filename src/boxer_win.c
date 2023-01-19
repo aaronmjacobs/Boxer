@@ -1,8 +1,26 @@
 #include <boxer/boxer.h>
+#include <stdlib.h>
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
 #include <Windows.h>
+
+#if defined(UNICODE)
+static WCHAR* utf8ToUtf16(const char* utf8String) {
+    int count = MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, NULL, 0);
+    if (count <= 0) {
+        return NULL;
+    }
+
+    WCHAR* utf16String = malloc(count * sizeof(WCHAR));
+    if (MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, utf16String, count) <= 0) {
+        free(utf16String);
+        return NULL;
+    }
+
+    return utf16String;
+}
+#endif // defined(UNICODE)
 
 static UINT getIcon(BoxerStyle style) {
    switch (style) {
@@ -54,5 +72,27 @@ BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle styl
    flags |= getIcon(style);
    flags |= getButtons(buttons);
 
-   return getSelection(MessageBox(NULL, message, title, flags), buttons);
+#if defined(UNICODE)
+   const WCHAR* messageArg = utf8ToUtf16(message);
+   if (!messageArg) {
+       return BoxerSelectionError;
+   }
+   const WCHAR* titleArg = utf8ToUtf16(title);
+   if (!titleArg) {
+       free(messageArg);
+       return BoxerSelectionError;
+   }
+#else
+   const char* messageArg = message;
+   const char* titleArg = title;
+#endif
+
+   BoxerSelection selection = getSelection(MessageBox(NULL, messageArg, titleArg, flags), buttons);
+
+#if defined(UNICODE)
+   free(messageArg);
+   free(titleArg);
+#endif // defined(UNICODE)
+
+   return selection;
 }

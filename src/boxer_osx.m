@@ -91,10 +91,8 @@ static BoxerSelection getSelection(ModalResponse index, BoxerButtons buttons) {
 BoxerSelection boxerShow(const char *message, const char *title, BoxerStyle style, BoxerButtons buttons) {
    NSAlert *alert = [[NSAlert alloc] init];
 
-   [alert setMessageText:[NSString stringWithCString:title
-                                   encoding:[NSString defaultCStringEncoding]]];
-   [alert setInformativeText:[NSString stringWithCString:message
-                                       encoding:[NSString defaultCStringEncoding]]];
+   [alert setMessageText:[NSString stringWithUTF8String:title]];
+   [alert setInformativeText:[NSString stringWithUTF8String:message]];
 
    [alert setAlertStyle:getAlertStyle(style)];
    setButtons(alert, buttons);
