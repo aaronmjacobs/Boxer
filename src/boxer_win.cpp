@@ -5,24 +5,29 @@
 #endif
 #include <Windows.h>
 
-namespace boxer {
+namespace boxer
+{
 
-namespace {
-
+namespace
+{
 #if defined(UNICODE)
-bool utf8ToUtf16(const char* utf8String, std::wstring& utf16String) {
-    int count = MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, nullptr, 0);
-    if (count <= 0) {
-        return false;
-    }
+   bool utf8ToUtf16(const char* utf8String, std::wstring& utf16String)
+   {
+      int count = MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, nullptr, 0);
+      if (count <= 0)
+      {
+         return false;
+      }
 
-    utf16String = std::wstring(static_cast<size_t>(count), L'\0');
-    return MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, &utf16String[0], count) > 0;
-}
+      utf16String = std::wstring(static_cast<size_t>(count), L'\0');
+      return MultiByteToWideChar(CP_UTF8, 0, utf8String, -1, &utf16String[0], count) > 0;
+   }
 #endif // defined(UNICODE)
 
-UINT getIcon(Style style) {
-   switch (style) {
+   UINT getIcon(Style style)
+   {
+      switch (style)
+      {
       case Style::Info:
          return MB_ICONINFORMATION;
       case Style::Warning:
@@ -33,11 +38,13 @@ UINT getIcon(Style style) {
          return MB_ICONQUESTION;
       default:
          return MB_ICONINFORMATION;
+      }
    }
-}
 
-UINT getButtons(Buttons buttons) {
-   switch (buttons) {
+   UINT getButtons(Buttons buttons)
+   {
+      switch (buttons)
+      {
       case Buttons::OK:
       case Buttons::Quit: // There is no 'Quit' button on Windows :(
          return MB_OK;
@@ -47,11 +54,13 @@ UINT getButtons(Buttons buttons) {
          return MB_YESNO;
       default:
          return MB_OK;
+      }
    }
-}
 
-Selection getSelection(int response, Buttons buttons) {
-   switch (response) {
+   Selection getSelection(int response, Buttons buttons)
+   {
+      switch (response)
+      {
       case IDOK:
          return buttons == Buttons::Quit ? Selection::Quit : Selection::OK;
       case IDCANCEL:
@@ -62,12 +71,12 @@ Selection getSelection(int response, Buttons buttons) {
          return Selection::No;
       default:
          return Selection::None;
+      }
    }
-}
-
 } // namespace
 
-Selection show(const char *message, const char *title, Style style, Buttons buttons) {
+Selection show(const char* message, const char* title, Style style, Buttons buttons)
+{
    UINT flags = MB_TASKMODAL;
 
    flags |= getIcon(style);
@@ -76,8 +85,9 @@ Selection show(const char *message, const char *title, Style style, Buttons butt
  #if defined(UNICODE)
    std::wstring wideMessage;
    std::wstring wideTitle;
-   if (!utf8ToUtf16(message, wideMessage) || !utf8ToUtf16(title, wideTitle)) {
-       return Selection::Error;
+   if (!utf8ToUtf16(message, wideMessage) || !utf8ToUtf16(title, wideTitle))
+   {
+      return Selection::Error;
    }
 
    const WCHAR* messageArg = wideMessage.c_str();

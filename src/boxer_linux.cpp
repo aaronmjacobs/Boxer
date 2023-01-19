@@ -1,12 +1,15 @@
 #include <boxer/boxer.h>
 #include <gtk/gtk.h>
 
-namespace boxer {
+namespace boxer
+{
 
-namespace {
-
-GtkMessageType getMessageType(Style style) {
-   switch (style) {
+namespace
+{
+   GtkMessageType getMessageType(Style style)
+   {
+      switch (style)
+      {
       case Style::Info:
          return GTK_MESSAGE_INFO;
       case Style::Warning:
@@ -17,11 +20,13 @@ GtkMessageType getMessageType(Style style) {
          return GTK_MESSAGE_QUESTION;
       default:
          return GTK_MESSAGE_INFO;
+      }
    }
-}
 
-GtkButtonsType getButtonsType(Buttons buttons) {
-   switch (buttons) {
+   GtkButtonsType getButtonsType(Buttons buttons)
+   {
+      switch (buttons)
+      {
       case Buttons::OK:
          return GTK_BUTTONS_OK;
       case Buttons::OKCancel:
@@ -32,11 +37,13 @@ GtkButtonsType getButtonsType(Buttons buttons) {
          return GTK_BUTTONS_CLOSE;
       default:
          return GTK_BUTTONS_OK;
+      }
    }
-}
 
-Selection getSelection(gint response) {
-   switch (response) {
+   Selection getSelection(gint response)
+   {
+      switch (response)
+      {
       case GTK_RESPONSE_OK:
          return Selection::OK;
       case GTK_RESPONSE_CANCEL:
@@ -49,20 +56,21 @@ Selection getSelection(gint response) {
          return Selection::Quit;
       default:
          return Selection::None;
+      }
    }
-}
-
 } // namespace
 
-Selection show(const char *message, const char *title, Style style, Buttons buttons) {
-   if (!gtk_init_check(0, nullptr)) {
+Selection show(const char* message, const char* title, Style style, Buttons buttons)
+{
+   if (!gtk_init_check(0, nullptr))
+   {
       return Selection::Error;
    }
 
    // Create a parent window to stop gtk_dialog_run from complaining
-   GtkWidget *parent = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+   GtkWidget* parent = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-   GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(parent),
+   GtkWidget* dialog = gtk_message_dialog_new(GTK_WINDOW(parent),
                                               GTK_DIALOG_MODAL,
                                               getMessageType(style),
                                               getButtonsType(buttons),
