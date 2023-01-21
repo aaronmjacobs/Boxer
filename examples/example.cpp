@@ -1,8 +1,10 @@
-#include <boxer/boxer.h>
+﻿#include <boxer/boxer.h>
 
 int main(int argc, char* argv[])
 {
    boxer::show("Simple message boxes are very easy to create.", "Simple Example");
+
+   boxer::show(u8"Boxer accepts UTF-8 strings. 💯", u8"Unicode 👍");
 
    boxer::show("There are a few different message box styles to choose from.", "Style Example", boxer::Style::Error);
 
