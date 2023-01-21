@@ -13,7 +13,7 @@ set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(SOURCES "${INC_DIR}/boxer/boxer.h")
 if (APPLE)
    list(APPEND SOURCES
-      "${SRC_DIR}/boxer_osx.m"
+      "${SRC_DIR}/boxer_mac.m"
    )
 elseif (WIN32)
    list(APPEND SOURCES
