@@ -1,4 +1,4 @@
-# Boxer
+# Boxer 🥊
 
 ## Introduction
 
@@ -6,17 +6,17 @@ Boxer is a simple library that allows for easy cross-platform creation of messag
 
 ## Example
 
-OS X:
+macOS:
 
-![OS X](http://i.imgur.com/ZUFGdSn.png)
+![macOS](https://user-images.githubusercontent.com/1409522/213894782-72c37b24-bdb3-4b29-a847-cbff7748b1fe.png)
 
 Windows:
 
-![Windows](http://i.imgur.com/brVJJw9.png)
+![Windows](https://user-images.githubusercontent.com/1409522/213894790-55cf2be8-bcc0-4867-95e0-7741993f07eb.png)
 
 Linux:
 
-![Linux](http://i.imgur.com/BmzzdsW.png)
+![Linux](https://user-images.githubusercontent.com/1409522/213894798-1bb1c279-5190-4108-b49c-08a28c7dfc29.png)
 
 ## Language
 
@@ -73,3 +73,19 @@ BoxerSelection sel = boxerShow("Make a choice:", "Decision", BoxerStyleWarning, 
 ```
 
 Calls to 'show' are blocking - execution of your program will not continue until the user dismisses the message box.
+
+### Encoding
+
+Boxer accepts strings encoded in UTF-8:
+
+```c
+boxerShow(u8"Boxer accepts UTF-8 strings. 💯", u8"Unicode 👍", kBoxerDefaultStyle, kBoxerDefaultButtons);
+```
+
+On Windows, `UNICODE` needs to be defined when compiling Boxer to enable UTF-8 support:
+
+```cmake
+if (WIN32)
+   target_compile_definitions(Boxer PRIVATE UNICODE)
+endif (WIN32)
+```
