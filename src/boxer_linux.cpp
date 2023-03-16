@@ -77,6 +77,10 @@ Selection show(const char* message, const char* title, Style style, Buttons butt
                                               "%s",
                                               message);
    gtk_window_set_title(GTK_WINDOW(dialog), title);
+
+   // Keep the dialog on top of other windows
+   gtk_window_set_keep_above(GTK_WINDOW(dialog), TRUE);
+
    Selection selection = getSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
 
    gtk_widget_destroy(GTK_WIDGET(dialog));
