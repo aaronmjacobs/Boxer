@@ -71,6 +71,12 @@ BoxerSelection boxerShow(const char* message, const char* title, BoxerStyle styl
                                               "%s",
                                               message);
    gtk_window_set_title(GTK_WINDOW(dialog), title);
+
+   gtk_window_set_gravity(GTK_WINDOW(parent), GDK_GRAVITY_CENTER);
+   gtk_window_set_gravity(GTK_WINDOW(dialog), GDK_GRAVITY_CENTER);
+   gtk_window_set_position(GTK_WINDOW(parent), GTK_WIN_POS_CENTER);
+   gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+   
    BoxerSelection selection = getSelection(gtk_dialog_run(GTK_DIALOG(dialog)));
 
    gtk_widget_destroy(GTK_WIDGET(dialog));
